@@ -157,18 +157,33 @@ function displayPerson(person) {
 function findPersonFamily(person, people){
     let immediateFamily = [];
     if(person.parents.length > 0){
-        for(let i = 0; i < person.parents.length; i++){
-            let parent = people.filter(function(el){
-                if(el.id === person.parents[i]) {return true}
-            })
-            immediateFamily.push(parent)
-        }
+        let theirParents = people.filter(function(el){
+            if(person.parents.includes(el.id)) {return true}
+        })
+        immediateFamily = immediateFamily.concat(theirParents)
     }
+    
+    if(person.parents.length > 0){
+        for(let i = 0; i < person.parents.length; i++){
+            let siblings = people.filter(function(el){
+                if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
+            })
+            immediateFamily = immediateFamily.concat(siblings)
+        }}
+    if(person.currentSpouse){
+        let spouse = people.filter(function(el){
+            if(el.id === person.currentSpouse) {return true}
+        })
+            immediateFamily = immediateFamily.concat(spouse)
+        }
+    
     displayPeople(immediateFamily)
+}
+
 //find persons parents
 //record parents
 //record the people who filter with the same parents
-}
+
 
 
 
