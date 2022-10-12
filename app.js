@@ -209,15 +209,16 @@ function findPersonDescendants(person, people){
     
 
 function searchByTraits(people){
-    switch (displayOption){
+    let choice = promptFor("Search by one trait or many traits", chars)
+    switch (choice){
         case 'Search single trait':
-            let trait = promptFor("Type a trait", chars)
-            search = people.filter(function(el){
-
-
+            searchTheAtrributes(people)
 
         case "Search multiple traits":
-
+            let option = promptFor("How many traits do you want to look up? (number)", chars)
+                for(i = 0; i < option; i ++){
+                    searchTheAtrributes(people)
+                }
 
     }
 
