@@ -79,7 +79,7 @@ function mainMenu(person, people) {
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
-            alert(personDescendants);
+            displayPeople(personDescendants);
             break;
         case "restart":
             // Restart app() from the very beginning
@@ -189,9 +189,115 @@ function findPersonFamily(person, people){
     return immediateFamily
 }
 
+//{(people.parents.includes(pesron.id)
+
+function findPersonDescendants(person, people){
+    let children = people.filter(function(el){
+        if(el.parents.includes(person.id)){return true}
+    })
+
+    if (children.length > 0){
+        for(let child of children){
+            children = children.concat(findPersonDescendants(child, people));
+        }
+        return children;
+    }
+    else {
+        return [];
+    }
+}
+    
+
+function searchByTraits(people){
+    switch (displayOption){
+        case 'Search single trait':
+            let trait = promptFor("Type a trait", chars)
+            search = people.filter(function(el){
 
 
 
+        case "Search multiple traits":
+
+
+    }
+
+}
+
+function searchTheAtrributes(people){
+    let choice = promptFor("Which attribute?", chars)
+    switch(choice){
+        case "First Name":
+            let firstName = promptFor("Name to search for", chars)
+            people.filter(function(el){
+                if(el.firstName === firstName){
+                    return true
+                }
+            })
+        case "Last Name":
+            let lastName = promptFor("Last name to search for", chars)
+            people.filter(function(el){
+                if(el.lastName === lastName){
+                    return true
+                }
+            })
+        case "Gender":
+            let gender = promptFor("Gender to search for", chars)
+            people.filter(function(el){
+                if(el.gender === gender){
+                    return true
+                }
+            })
+        case "Date of Birth":
+            let dob = promptFor("Search a date of birth", chars)
+            people.filter(function(el){
+                if(el.dob === dob){
+                    return true
+                }
+            })
+        case "Height":
+            let height = promptFor("Search for a height", chars)
+            people.filter(function(el){
+                if(el.height === height){
+                    return true
+                }
+            })
+        case "Weight":
+            let weight = promptFor("Search for a weight", chars)
+            people.filter(function(el){
+                if(el.weight === weight){
+                    return true
+                }
+            })
+        case "Eye Color":
+            let eyeColor = promptFor("Search for an eye color", chars)
+            people.filter(function(el){
+                if(el.eyeColor === eyeColor){
+                    return true
+                }
+            })
+        case "Occupation":
+            let occupation = promptFor("Search for the occupation", chars)
+            people.filter(function(el){
+                if(el.occupation === occupation){
+                    return true
+                }
+            })
+        case "Parent":
+            let parent = promptFor("Search by their parent", chars)
+            people.filter(function(el){
+                if(el.parent === parent){
+                    return true
+                }
+            })
+        case "Current Spouse":
+            let spouse = promptFor("Search by their spouse", chars)
+            people.filter(function(el){
+                if(el.currentSpouse === spouse){
+                    return true
+                }
+            })
+        }
+    }
 
 
 
