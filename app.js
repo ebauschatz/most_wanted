@@ -124,8 +124,8 @@ function searchByName(people) {
 function displayPeople(people) {
     alert(
         people
-            .map(function (person) {
-                return `${person.firstName} ${person.lastName}`;
+            .map(function (person, index) {
+                return `${index + 1}. ${person.firstName} ${person.lastName}`;
             })
             .join("\n")
     );
@@ -250,6 +250,18 @@ function searchByTraits(people){
     switch (choice){
         case 'Search single trait':
             searchResults = searchTheAtrributes(people);
+            if(searchResults.length > 1){
+                let promptText = searchResults.map(function (person, index) {
+                    return `${index + 1}. ${person.firstName} ${person.lastName}`;
+                })
+                .join("\n")
+
+                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n\n ${promptText}`, chars);
+                let selectedPersonNumber = parseInt(selectedPerson);
+                searchResults = [searchResults[selectedPersonNumber - 1]];
+
+            }
+            displayPeople(searchResults);
             break;
 
         case "Search multiple traits":
@@ -348,8 +360,6 @@ function searchTheAtrributes(people){
             })
             break;
     }
-
-    displayPeople(matchingPeople);
 
     return matchingPeople;
 }
