@@ -140,10 +140,46 @@ function displayPeople(people) {
 function displayPerson(person) {
     let personInfo = `First Name: ${person.firstName}\n`;
     personInfo += `Last Name: ${person.lastName}\n`;
-    //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
+    personInfo += `Gender: ${person.gender}\n`;
+    personInfo += `DOB: ${person.dob}\n`;
+    personInfo += `Height:${person.height}\n`;
+    personInfo += `Weight: ${person.weight}\n`;
+    personInfo += `Eye Color: ${person.eyeColor}\n`;
+    personInfo += `Occupation: ${person.occupation}\n`;
+    personInfo += `Parents: ${person.parents[0]}, ${person.parents[1]}\n`; //id, may not work with single parent
+    personInfo += `Current Spouse: ${person.currentSpouse}\n`; //id
     alert(personInfo);
 }
 // End of displayPerson()
+
+
+
+function findPersonFamily(person, people){
+    let immediateFamily = [];
+    if(person.parents.length > 0){
+        for(let i = 0; i < person.parents.length; i++){
+            let parent = people.filter(function(el){
+                if(el.id === person.parents[i]) {return true}
+            })
+            immediateFamily.push(parent)
+        }
+    }
+    displayPeople(immediateFamily)
+//find persons parents
+//record parents
+//record the people who filter with the same parents
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * This function's purpose is twofold:
