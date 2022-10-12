@@ -146,7 +146,7 @@ function displayPerson(person) {
     personInfo += `Weight: ${person.weight}\n`;
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
-    personInfo += `Parents: ${person.parents[0]}, ${person.parents[1]}\n`; //id, may not work with single parent
+    personInfo += `Parents: ${person.parents[0]}, ${person.parents[1]}\n`; //id
     personInfo += `Current Spouse: ${person.currentSpouse}\n`; //id
     alert(personInfo);
 }
@@ -155,12 +155,15 @@ function displayPerson(person) {
 
 
 function findPersonFamily(person, people){
-    let immediateFamily = [];
+    let immediateFamily = "";
     if(person.parents.length > 0){
         let theirParents = people.filter(function(el){
             if(person.parents.includes(el.id)) {return true}
         })
-        immediateFamily = immediateFamily.concat(theirParents)
+        immediateFamily += theirParents.map(function (parent) {
+            return `Parent: ${parent.firstName} ${parent.lastName}  \n`;
+        })
+        .join("\n")
     }
     
     if(person.parents.length > 0){
@@ -168,21 +171,24 @@ function findPersonFamily(person, people){
             let siblings = people.filter(function(el){
                 if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
             })
-            immediateFamily = immediateFamily.concat(siblings)
+            immediateFamily += siblings.map(function (sibling) {
+                return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
+            })
+            .join("\n")
         }}
     if(person.currentSpouse){
-        let spouse = people.filter(function(el){
+        let theirSpouse = people.filter(function(el){
             if(el.id === person.currentSpouse) {return true}
         })
-            immediateFamily = immediateFamily.concat(spouse)
+            immediateFamily += theirSpouse.map(function (spouse) {
+                return `Spouse: ${spouse.firstName} ${spouse.lastName}  \n`;
+            })
+            .join("\n")
         }
     
-    displayPeople(immediateFamily)
+    return immediateFamily
 }
 
-//find persons parents
-//record parents
-//record the people who filter with the same parents
 
 
 
