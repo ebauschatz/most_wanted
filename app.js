@@ -152,163 +152,6 @@ function displayPerson(person) {
 }
 // End of displayPerson()
 
-
-
-function findPersonFamily(person, people){
-    let immediateFamily = "";
-    if(person.parents.length > 0){
-        let theirParents = people.filter(function(el){
-            if(person.parents.includes(el.id)) {return true}
-        })
-        immediateFamily += theirParents.map(function (parent) {
-            return `Parent: ${parent.firstName} ${parent.lastName}  \n`;
-        })
-        .join("\n")
-    }
-    
-    if(person.parents.length > 0){
-        for(let i = 0; i < person.parents.length; i++){
-            let siblings = people.filter(function(el){
-                if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
-            })
-            immediateFamily += siblings.map(function (sibling) {
-                return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
-            })
-            .join("\n")
-        }}
-    if(person.currentSpouse){
-        let theirSpouse = people.filter(function(el){
-            if(el.id === person.currentSpouse) {return true}
-        })
-            immediateFamily += theirSpouse.map(function (spouse) {
-                return `Spouse: ${spouse.firstName} ${spouse.lastName}  \n`;
-            })
-            .join("\n")
-        }
-    
-    return immediateFamily
-}
-
-//{(people.parents.includes(pesron.id)
-
-function findPersonDescendants(person, people){
-    let children = people.filter(function(el){
-        if(el.parents.includes(person.id)){return true}
-    })
-
-    if (children.length > 0){
-        for(let child of children){
-            children = children.concat(findPersonDescendants(child, people));
-        }
-        return children;
-    }
-    else {
-        return [];
-    }
-}
-    
-
-function searchByTraits(people){
-    let choice = promptFor("Search by one trait or many traits", chars)
-    switch (choice){
-        case 'Search single trait':
-            searchTheAtrributes(people)
-
-        case "Search multiple traits":
-            let option = promptFor("How many traits do you want to look up? (number)", chars)
-                for(i = 0; i < option; i ++){
-                    searchTheAtrributes(people)
-                }
-
-    }
-
-}
-
-function searchTheAtrributes(people){
-    let choice = promptFor("Which attribute?", chars)
-    switch(choice){
-        case "First Name":
-            let firstName = promptFor("Name to search for", chars)
-            people.filter(function(el){
-                if(el.firstName === firstName){
-                    return true
-                }
-            })
-        case "Last Name":
-            let lastName = promptFor("Last name to search for", chars)
-            people.filter(function(el){
-                if(el.lastName === lastName){
-                    return true
-                }
-            })
-        case "Gender":
-            let gender = promptFor("Gender to search for", chars)
-            people.filter(function(el){
-                if(el.gender === gender){
-                    return true
-                }
-            })
-        case "Date of Birth":
-            let dob = promptFor("Search a date of birth", chars)
-            people.filter(function(el){
-                if(el.dob === dob){
-                    return true
-                }
-            })
-        case "Height":
-            let height = promptFor("Search for a height", chars)
-            people.filter(function(el){
-                if(el.height === height){
-                    return true
-                }
-            })
-        case "Weight":
-            let weight = promptFor("Search for a weight", chars)
-            people.filter(function(el){
-                if(el.weight === weight){
-                    return true
-                }
-            })
-        case "Eye Color":
-            let eyeColor = promptFor("Search for an eye color", chars)
-            people.filter(function(el){
-                if(el.eyeColor === eyeColor){
-                    return true
-                }
-            })
-        case "Occupation":
-            let occupation = promptFor("Search for the occupation", chars)
-            people.filter(function(el){
-                if(el.occupation === occupation){
-                    return true
-                }
-            })
-        case "Parent":
-            let parent = promptFor("Search by their parent", chars)
-            people.filter(function(el){
-                if(el.parent === parent){
-                    return true
-                }
-            })
-        case "Current Spouse":
-            let spouse = promptFor("Search by their spouse", chars)
-            people.filter(function(el){
-                if(el.currentSpouse === spouse){
-                    return true
-                }
-            })
-        }
-    }
-
-
-
-
-
-
-
-
-
-
 /**
  * This function's purpose is twofold:
  * First, to generate a prompt with the value passed in to the question parameter.
@@ -348,3 +191,165 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+function findPersonFamily(person, people){
+    let immediateFamily = "";
+    if(person.parents.length > 0){
+        let theirParents = people.filter(function(el){
+            if(person.parents.includes(el.id)) {return true}
+        })
+        immediateFamily += theirParents.map(function (parent) {
+            return `Parent: ${parent.firstName} ${parent.lastName}  \n`;
+        })
+        .join("\n")
+    }
+    
+    if(person.parents.length > 0){
+        for(let i = 0; i < person.parents.length; i++){
+            let siblings = people.filter(function(el){
+                if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
+            })
+            immediateFamily += siblings.map(function (sibling) {
+                return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
+            })
+            .join("\n")
+        }}
+    if(person.currentSpouse){
+        let theirSpouse = people.filter(function(el){
+            if(el.id === person.currentSpouse) {return true}
+        })
+            immediateFamily += theirSpouse.map(function (spouse) {
+                return `Spouse: ${spouse.firstName} ${spouse.lastName}  \n`;
+            })
+            .join("\n")
+        }
+    
+    return immediateFamily
+}
+
+function findPersonDescendants(person, people){
+    let children = people.filter(function(el){
+        if(el.parents.includes(person.id)){return true}
+    })
+
+    if (children.length > 0){
+        for(let child of children){
+            children = children.concat(findPersonDescendants(child, people));
+        }
+        return children;
+    }
+    else {
+        return [];
+    }
+}
+    
+
+function searchByTraits(people){
+    let choice = promptFor("Search by one trait or many traits", chars);
+    let searchResults;
+    switch (choice){
+        case 'Search single trait':
+            searchResults = searchTheAtrributes(people);
+            break;
+
+        case "Search multiple traits":
+            let option = promptFor("How many traits do you want to look up? (number)", chars)
+                for(i = 0; i < option; i ++){
+                    searchTheAtrributes(people)
+                }
+            break;
+    }
+
+    return searchResults;
+}
+
+function searchTheAtrributes(people){
+    let choice = promptFor("Which attribute?", chars)
+    let matchingPeople;
+    switch(choice){
+        case "First Name":
+            let firstName = promptFor("Name to search for", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.firstName === firstName){
+                    return true
+                }
+            })
+            break;
+        case "Last Name":
+            let lastName = promptFor("Last name to search for", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.lastName === lastName){
+                    return true
+                }
+            })
+            break;
+        case "Gender":
+            let gender = promptFor("Gender to search for", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.gender === gender){
+                    return true
+                }
+            })
+            break;
+        case "Date of Birth":
+            let dob = promptFor("Search a date of birth", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.dob === dob){
+                    return true
+                }
+            })
+            break;
+        case "Height":
+            let height = promptFor("Search for a height", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.height === height){
+                    return true
+                }
+            })
+            break;
+        case "Weight":
+            let weight = promptFor("Search for a weight", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.weight === weight){
+                    return true
+                }
+            })
+            break;
+        case "Eye Color":
+            let eyeColor = promptFor("Search for an eye color", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.eyeColor === eyeColor){
+                    return true
+                }
+            })
+            break;
+        case "Occupation":
+            let occupation = promptFor("Search for the occupation", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.occupation === occupation){
+                    return true
+                }
+            })
+            break;
+        case "Parent":
+            let parent = promptFor("Search by their parent", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.parent === parent){
+                    return true
+                }
+            })
+            break;
+        case "Current Spouse":
+            let spouse = promptFor("Search by their spouse", chars)
+            matchingPeople = people.filter(function(el){
+                if(el.currentSpouse === spouse){
+                    return true
+                }
+            })
+            break;
+    }
+
+    displayPeople(matchingPeople);
+
+    return matchingPeople;
+}
