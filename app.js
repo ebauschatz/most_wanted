@@ -66,8 +66,7 @@ function mainMenu(person, people) {
         case "info":
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
-            let personInfo = displayPerson(person[0]);
-            alert(personInfo);
+            displayPerson(person[0]);
             break;
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
@@ -248,7 +247,7 @@ function searchByTraits(people){
     let choice = promptFor("Search by one trait or many traits", chars);
     let searchResults;
     switch (choice){
-        case 'Search single trait':
+        case 'one':
             searchResults = searchTheAtrributes(people);
             if(searchResults.length > 1){
                 let promptText = searchResults.map(function (person, index) {
@@ -256,7 +255,7 @@ function searchByTraits(people){
                 })
                 .join("\n")
 
-                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n\n ${promptText}`, chars);
+                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, chars);
                 let selectedPersonNumber = parseInt(selectedPerson);
                 searchResults = [searchResults[selectedPersonNumber - 1]];
 
@@ -264,11 +263,24 @@ function searchByTraits(people){
             displayPeople(searchResults);
             break;
 
-        case "Search multiple traits":
+        case "many":
             let option = promptFor("How many traits do you want to look up? (number)", chars)
-                for(i = 0; i < option; i ++){
-                    searchTheAtrributes(people)
-                }
+            searchResults = people;
+            for(let i = 0; i < option; i ++){
+                searchResults = searchTheAtrributes(searchResults);
+            }
+            if(searchResults.length > 1){
+                let promptText = searchResults.map(function (person, index) {
+                    return `${index + 1}. ${person.firstName} ${person.lastName}`;
+                })
+                .join("\n")
+
+                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, chars);
+                let selectedPersonNumber = parseInt(selectedPerson);
+                searchResults = [searchResults[selectedPersonNumber - 1]];
+
+            }
+            displayPeople(searchResults);
             break;
     }
 
