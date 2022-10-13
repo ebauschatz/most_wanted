@@ -115,13 +115,19 @@ function searchByName(people) {
  * @param {Array} people        A collection of person objects.
  */
 function displayPeople(people) {
-    alert(
-        people
-            .map(function (person, index) {
-                return `${index + 1}. ${person.firstName} ${person.lastName}`;
-            })
-            .join("\n")
-    );
+    if(people.length > 0){
+        alert(
+            people
+                .map(function (person, index) {
+                    return `${index + 1}. ${person.firstName} ${person.lastName}`;
+                })
+                .join("\n")
+        );
+    }
+    else {
+        alert("None");
+    }
+    
 }
 // End of displayPeople()
 
