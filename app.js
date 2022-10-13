@@ -496,6 +496,11 @@ function searchTheAtrributes(people){
 // End of searchTheAttributes()
 
 function viewAllPeople(people){
+    openModal()
+    document.getElementById("allPeopleDisplay").innerHTML = displayAllPeople(people);
+}
+
+function displayAllPeople(people) {
     let peopleText = people.map(function(person){
         let personInfo = "<table class=\"personTable\">";
         personInfo += `<tr class=\"personTableRow\"><td>ID: </td><td>${person.id}</td></tr>`;
@@ -512,6 +517,16 @@ function viewAllPeople(people){
         return personInfo;
     })
     .join("");
-    
-    document.getElementById("allPeopleDisplay").innerHTML = peopleText;
+
+    return peopleText
 }
+
+function openModal() {
+    let modal = document.getElementById("viewPeopleModal");
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    let modal = document.getElementById("viewPeopleModal");
+    modal.style.display = "none";
+  }

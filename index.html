@@ -8,17 +8,24 @@
     <title>Most Wanted</title>
 </head>
 <body>
-    <section>
+    <section class="sectionStart">
+        <button onClick="viewAllPeople(data)" style="font-size: 50px">View All People</button>
+
+        <div id="viewPeopleModal" class="modal">
+            <div id="viewPeopleModalContent">
+                <span onclick="closeModal()" class="close">&times;</span>
+                <p id="allPeopleDisplay" class="peopleGrid"></p>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="sectionStart">
         <button onClick="app(data)" style="font-size: 50px">Start Searching</button>
         <h3>Results</h3>
         <p id="displayResults"></p>
     </section>
     
-    <section>
-        <button onClick="viewAllPeople(data)" style="font-size: 50px">View All People</button>
-        <p id="allPeopleDisplay" class="peopleGrid"></p>
-    </section>
-
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>
