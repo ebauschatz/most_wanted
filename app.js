@@ -1,5 +1,7 @@
-now = new Date().toLocaleString()
-console.log(now)
+const now = new Date();
+let currentDay = now.getDate();
+let currentMonth = now.getMonth() + 1;
+let currentYear = now.getFullYear();
 /*
     Author: devCodeCamp
     Description: Most Wanted Starter Code
@@ -404,11 +406,11 @@ function searchByTraits(people){
  * @returns {Array}             A collection of person objects.
  */
 function searchTheAtrributes(people){
-    let promptText = "Choose an attribute below:\nFirst Name\nLast Name\nGender\nDate of Birth\nHeight\nWeight\nEye Color\nOccupation\nParent\nCurrent Spouse";
+    let promptText = "Choose an attribute below:\nFirst Name\nLast Name\nGender\nDate of Birth\nHeight\nWeight\nEye Color\nOccupation\nParent\nCurrent Spouse\nAge";
     let choice = promptFor(promptText, chars)
     let matchingPeople;
-    switch(choice){
-        case "First Name":
+    switch(choice.toLowerCase()){
+        case "first name":
             let firstName = promptFor("Name to search for", chars)
             matchingPeople = people.filter(function(el){
                 if(el.firstName.toLowerCase() === firstName.toLowerCase()){
@@ -416,7 +418,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Last Name":
+        case "last name":
             let lastName = promptFor("Last name to search for", chars)
             matchingPeople = people.filter(function(el){
                 if(el.lastName.toLowerCase() === lastName.toLowerCase()){
@@ -424,7 +426,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Gender":
+        case "gender":
             let gender = promptFor("Gender to search for", chars)
             matchingPeople = people.filter(function(el){
                 if(el.gender.toLowerCase() === gender.toLowerCase()){
@@ -432,7 +434,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Date of Birth":
+        case "date of birth":
             let dob = promptFor("Search a date of birth", chars)
             matchingPeople = people.filter(function(el){
                 if(el.dob === dob){
@@ -440,7 +442,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Height":
+        case "height":
             let height = promptFor("Search for a height (in inches)", isNumeric)
             matchingPeople = people.filter(function(el){
                 if(el.height === height){
@@ -448,7 +450,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Weight":
+        case "weight":
             let weight = promptFor("Search for a weight", isNumeric)
             matchingPeople = people.filter(function(el){
                 if(el.weight === weight){
@@ -456,7 +458,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Eye Color":
+        case "eye olor":
             let eyeColor = promptFor("Search for an eye color", chars)
             matchingPeople = people.filter(function(el){
                 if(el.eyeColor.toLowerCase() === eyeColor.toLowerCase()){
@@ -464,7 +466,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Occupation":
+        case "occupation":
             let occupation = promptFor("Search for the occupation", chars)
             matchingPeople = people.filter(function(el){
                 if(el.occupation.toLowerCase() === occupation.toLowerCase()){
@@ -472,7 +474,7 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Parent":
+        case "parent":
             let parent = promptFor("Search by their parent", chars)
             matchingPeople = people.filter(function(el){
                 if(el.parent === parent){
@@ -480,13 +482,17 @@ function searchTheAtrributes(people){
                 }
             })
             break;
-        case "Current Spouse":
+        case "current spouse":
             let spouse = promptFor("Search by their spouse", chars)
             matchingPeople = people.filter(function(el){
                 if(el.currentSpouse === spouse){
                     return true
                 }
             })
+            break;
+        case "age":
+            let age = promptFor("Search by age", isNumeric)
+            matchingPeople = searchAge(age, people)
             break;
         default:
             return searchTheAtrributes(people);
@@ -532,3 +538,38 @@ function closeModal() {
     let modal = document.getElementById("viewPeopleModal");
     modal.style.display = "none";
   }
+
+
+function searchAge(age, people){
+    let matchingPeople = people.filter(function(el){
+        let tempYear = parseInt(`${el.dob.charAt(el.dob.length-4)}${el.dob.charAt(el.dob.length-3)}${el.dob.charAt(el.dob.length-2)}${el.dob.charAt(el.dob.length-1)}`);
+        let tempMonth = parseInt(`${el.dob.charAt(el.dob.length-10)}${el.dob.charAt(el.dob.length-9)}`);
+        let tempDay = parseInt(`${el.dob.charAt(el.dob.length-7)}${el.dob.charAt(el.dob.length-6)}`);
+
+        if(currentYear - tempYear === parseInt(age)){
+            if(tempMonth < currentMonth){
+                return true
+            }
+
+            else if (tempMonth === currentMonth && tempDay <= currentDay){
+                    return true
+            }
+
+            else{
+                return false
+            }
+        }
+        if(currentYear - tempYear - 1 ===  parseInt(age)){
+            if(tempMonth > currentMonth){
+                return true
+        } 
+            else if(tempMonth === currentMonth && tempDay >= currentDay){
+                return true
+            }
+            else{
+                return false
+            }
+        }
+    })
+    return matchingPeople
+}
