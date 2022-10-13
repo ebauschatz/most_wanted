@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Most Wanted</title>
 </head>
 <body>
-    <button onClick="app(data)" style="font-size: 50px">Start Searching</button>
-    <h3>Results</h3>
-    <p id="displayResults"></p>
+    <section>
+        <button onClick="app(data)" style="font-size: 50px">Start Searching</button>
+        <h3>Results</h3>
+        <p id="displayResults"></p>
+    </section>
+    
+    <section>
+        <button onClick="viewAllPeople(data)" style="font-size: 50px">View All People</button>
+        <p id="allPeopleDisplay" class="peopleGrid"></p>
+    </section>
+
     <script src="data.js"></script>
     <script src="app.js"></script>
 </body>

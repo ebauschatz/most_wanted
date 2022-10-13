@@ -1,0 +1,15 @@
+.personTable {
+    border: 1px solid #ababab;
+    padding: 5px;
+    margin: 10px;
+}
+
+.personTableRow:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.peopleGrid {
+    display: grid;
+    justify-content: space-around;
+    grid-template-areas: "auto auto auto";
+}
