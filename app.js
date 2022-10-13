@@ -229,22 +229,36 @@ function findPersonFamily(person, people){
     if(person.parents.length > 0){
         immediateFamily += findParents(person, people) + "\n";
     }
+    else {
+        immediateFamily += "Parent: None" + "\n";
+    }
     
     if(person.parents.length > 0){
             immediateFamily += findSiblings(person, people) + "\n";
     }
+    else {
+        immediateFamily += "Sibling: None" + "\n";
+    }
 
     if(person.currentSpouse){
-        let theirSpouse = people.filter(function(el){
-            if(el.id === person.currentSpouse) {return true}
-        })
-            immediateFamily += theirSpouse.map(function (spouse) {
-                return `Spouse: ${spouse.firstName} ${spouse.lastName}  \n`;
-            })
-            .join("\n")
-        }
+        immediateFamily += findSpouse(person, people) + "\n";
+    }
+    else {
+        immediateFamily += "Spouse: None";
+    }
     
     return immediateFamily
+}
+
+function findSpouse(person, people){
+    let theirSpouse = people.filter(function(el){
+        if(el.id === person.currentSpouse) {return true}
+    })
+    let spouseText = theirSpouse.map(function (spouse) {
+            return `Spouse: ${spouse.firstName} ${spouse.lastName}`;
+    })
+    .join("\n")
+    return spouseText;
 }
 
 function findSiblings(person, people) {
@@ -254,7 +268,7 @@ function findSiblings(person, people) {
             if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
         })
         siblingText += siblings.map(function (sibling) {
-            return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
+            return `Sibling: ${sibling.firstName} ${sibling.lastName}`;
         })
         .join("\n")
     }
@@ -270,8 +284,8 @@ function findParents(person, people) {
     });
     let theirParentsText = theirParents.map(function (parent) {
             return `Parent: ${parent.firstName} ${parent.lastName}`;
-        })
-        .join("\n");
+    })
+    .join("\n");
     if (theirParentsText === "") {
         theirParentsText = "Parent: None";
     }
