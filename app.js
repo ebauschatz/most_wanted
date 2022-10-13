@@ -227,25 +227,13 @@ function chars(input) {
 function findPersonFamily(person, people){
     let immediateFamily = "";
     if(person.parents.length > 0){
-        let theirParents = people.filter(function(el){
-            if(person.parents.includes(el.id)) {return true}
-        })
-        immediateFamily += theirParents.map(function (parent) {
-            return `Parent: ${parent.firstName} ${parent.lastName}  \n`;
-        })
-        .join("\n")
+        immediateFamily += findParents(person, people) + "\n";
     }
     
     if(person.parents.length > 0){
-        for(let i = 0; i < person.parents.length; i++){
-            let siblings = people.filter(function(el){
-                if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
-            })
-            immediateFamily += siblings.map(function (sibling) {
-                return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
-            })
-            .join("\n")
-        }}
+            immediateFamily += findSiblings(person, people) + "\n";
+    }
+
     if(person.currentSpouse){
         let theirSpouse = people.filter(function(el){
             if(el.id === person.currentSpouse) {return true}
@@ -257,6 +245,37 @@ function findPersonFamily(person, people){
         }
     
     return immediateFamily
+}
+
+function findSiblings(person, people) {
+    let siblingText = "";
+    for(let i = 0; i < person.parents.length; i++){
+        let siblings = people.filter(function(el){
+            if(el.parents.includes(person.parents[i]) && el.id !== person.id) {return true}
+        })
+        siblingText += siblings.map(function (sibling) {
+            return `Sibling: ${sibling.firstName} ${sibling.lastName}  \n`;
+        })
+        .join("\n")
+    }
+    if (siblingText === ""){
+        siblingText = "Sibling: None";
+    }
+    return siblingText;
+}
+
+function findParents(person, people) {
+    let theirParents = people.filter(function (el) {
+        if (person.parents.includes(el.id)) { return true; }
+    });
+    let theirParentsText = theirParents.map(function (parent) {
+            return `Parent: ${parent.firstName} ${parent.lastName}`;
+        })
+        .join("\n");
+    if (theirParentsText === "") {
+        theirParentsText = "Parent: None";
+    }
+    return theirParentsText;
 }
 
 function findPersonDescendants(person, people){
