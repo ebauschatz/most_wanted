@@ -1,3 +1,5 @@
+now = new Date().toLocaleString()
+console.log(now)
 /*
     Author: devCodeCamp
     Description: Most Wanted Starter Code
@@ -348,3 +350,14 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+function nums(input){
+    pass
+}
+
+function noYes(){
+    pass //check for switch case spelling
+}
+function noYes(){
+    pass //check for trait spelling
+}
