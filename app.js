@@ -496,3 +496,39 @@ function searchTheAtrributes(people){
     return matchingPeople;
 }
 // End of searchTheAttributes()
+
+function viewAllPeople(people){
+    openModal()
+    document.getElementById("allPeopleDisplay").innerHTML = displayAllPeople(people);
+}
+
+function displayAllPeople(people) {
+    let peopleText = people.map(function(person){
+        let personInfo = "<table class=\"personTable\">";
+        personInfo += `<tr class=\"personTableRow\"><td>ID: </td><td>${person.id}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Name: </td><td>${person.firstName} ${person.lastName}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Gender: </td><td>${person.gender}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>DOB: </td><td>${person.dob}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Height: </td><td>${person.height}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Weight: </td><td>${person.weight}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Eye Color: </td><td>${person.eyeColor}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Occupation: </td><td>${person.occupation}</td></tr>`;
+        personInfo += `<tr class=\"personTableRow\"><td>Parent IDs: </td><td>${returnDataOrDisplayDefault(person.parents[0])}, ${returnDataOrDisplayDefault(person.parents[1])}</td></tr>`; //id
+        personInfo += `<tr class=\"personTableRow\"><td>Current Spouse ID: </td><td>${returnDataOrDisplayDefault(person.currentSpouse)}</td></tr>`; //id
+        personInfo += "</table>"
+        return personInfo;
+    })
+    .join("");
+
+    return peopleText
+}
+
+function openModal() {
+    let modal = document.getElementById("viewPeopleModal");
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    let modal = document.getElementById("viewPeopleModal");
+    modal.style.display = "none";
+  }

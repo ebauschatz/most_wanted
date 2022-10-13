@@ -1,0 +1,57 @@
+.sectionStart {
+    padding: 25px 5px;
+}
+
+.personTable {
+    border: 1px solid #ababab;
+    padding: 5px;
+    margin: 10px;
+}
+
+.personTableRow:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.peopleGrid {
+    display: grid;
+    justify-content: space-around;
+    grid-template-areas: "auto auto auto";
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    border: 2px solid;
+    z-index: 1;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    overflow: auto;
+    background-color: #ffffff;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+    background-color: #ffffff;
+    color: rgb(249, 63, 63);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 20px;
+    padding: 0px 10px;
+  }
+
+.close:hover,
+.close:focus {
+  cursor: pointer;
+  background-color: rgba(249, 63, 63, 0.25);
+}
