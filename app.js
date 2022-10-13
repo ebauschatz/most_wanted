@@ -230,6 +230,12 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+/**
+ * This function finds the immediate family of a single person
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {String}            A string of family names and relationships
+ */
 function findPersonFamily(person, people){
     let immediateFamily = "";
     if(person.parents.length > 0){
@@ -255,7 +261,14 @@ function findPersonFamily(person, people){
     
     return immediateFamily
 }
+// End of findPersonFamily()
 
+/**
+ * This function finds the spouse of a single person
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {String}            A string of the spouse name
+ */
 function findSpouse(person, people){
     let theirSpouse = people.filter(function(el){
         if(el.id === person.currentSpouse) {return true}
@@ -266,7 +279,14 @@ function findSpouse(person, people){
     .join("\n")
     return spouseText;
 }
+// End of findSpouse()
 
+/**
+ * This function finds the siblings of a single person
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {String}            A string of sibling names
+ */
 function findSiblings(person, people) {
     let siblingText = "";
     for(let i = 0; i < person.parents.length; i++){
@@ -283,7 +303,14 @@ function findSiblings(person, people) {
     }
     return siblingText;
 }
+// End of findSiblings()
 
+/**
+ * This function finds the parents of a single person
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {String}            A string of parent names
+ */
 function findParents(person, people) {
     let theirParents = people.filter(function (el) {
         if (person.parents.includes(el.id)) { return true; }
@@ -297,7 +324,14 @@ function findParents(person, people) {
     }
     return theirParentsText;
 }
+// End of findParents()
 
+/**
+ * This function finds all descendants of a single person
+ * @param {Object[]} person     A singular object inside of an array.
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}             A collection of person objects.
+ */
 function findPersonDescendants(person, people){
     let children = people.filter(function(el){
         if(el.parents.includes(person.id)){return true}
@@ -313,8 +347,13 @@ function findPersonDescendants(person, people){
         return [];
     }
 }
+// End of findPersonDescendants
     
-
+/**
+ * This function finds person objects based on their attributes
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}             A collection of person objects.
+ */
 function searchByTraits(people){
     let choice = promptFor("Search by one trait or many traits", oneMany);
     let searchResults;
@@ -358,7 +397,13 @@ function searchByTraits(people){
 
     return searchResults;
 }
+// End of searchByTraits()
 
+/**
+ * This function searches for person objects matching a single attribute
+ * @param {Array} people        A collection of person objects.
+ * @returns {Array}             A collection of person objects.
+ */
 function searchTheAtrributes(people){
     let promptText = "Choose an attribute below:\nFirst Name\nLast Name\nGender\nDate of Birth\nHeight\nWeight\nEye Color\nOccupation\nParent\nCurrent Spouse";
     let choice = promptFor(promptText, chars)
@@ -451,3 +496,4 @@ function searchTheAtrributes(people){
 
     return matchingPeople;
 }
+// End of searchTheAttributes()
