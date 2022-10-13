@@ -68,7 +68,7 @@ function mainMenu(person, people) {
             break;
         case "family":
             let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
+            document.getElementById("displayResults").innerHTML = personFamily;
             break;
         case "descendants":
             let personDescendants = findPersonDescendants(person[0], people);
@@ -116,16 +116,15 @@ function searchByName(people) {
  */
 function displayPeople(people) {
     if(people.length > 0){
-        alert(
-            people
+        let resultsText = people
                 .map(function (person, index) {
                     return `${index + 1}. ${person.firstName} ${person.lastName}`;
                 })
-                .join("\n")
-        );
+                .join("<br>")
+        document.getElementById("displayResults").innerHTML = resultsText;
     }
     else {
-        alert("None");
+        document.getElementById("displayResults").innerHTML = "None";
     }
     
 }
@@ -137,17 +136,17 @@ function displayPeople(people) {
  * @param {Object} person       A singular object.
  */
 function displayPerson(person) {
-    let personInfo = `First Name: ${person.firstName}\n`;
-    personInfo += `Last Name: ${person.lastName}\n`;
-    personInfo += `Gender: ${person.gender}\n`;
-    personInfo += `DOB: ${person.dob}\n`;
-    personInfo += `Height:${person.height}\n`;
-    personInfo += `Weight: ${person.weight}\n`;
-    personInfo += `Eye Color: ${person.eyeColor}\n`;
-    personInfo += `Occupation: ${person.occupation}\n`;
-    personInfo += `Parents: ${returnDataOrDisplayDefault(person.parents[0])}, ${returnDataOrDisplayDefault(person.parents[1])}\n`; //id
-    personInfo += `Current Spouse: ${returnDataOrDisplayDefault(person.currentSpouse)}\n`; //id
-    alert(personInfo);
+    let personInfo = `First Name: ${person.firstName}` + "<br>";
+    personInfo += `Last Name: ${person.lastName}` + "<br>";
+    personInfo += `Gender: ${person.gender}` + "<br>";
+    personInfo += `DOB: ${person.dob}` + "<br>";
+    personInfo += `Height:${person.height}` + "<br>";
+    personInfo += `Weight: ${person.weight}` + "<br>";
+    personInfo += `Eye Color: ${person.eyeColor}` + "<br>";
+    personInfo += `Occupation: ${person.occupation}` + "<br>";
+    personInfo += `Parents: ${returnDataOrDisplayDefault(person.parents[0])}, ${returnDataOrDisplayDefault(person.parents[1])}` + "<br>"; //id
+    personInfo += `Current Spouse: ${returnDataOrDisplayDefault(person.currentSpouse)}` + "<br>"; //id
+    document.getElementById("displayResults").innerHTML = personInfo;
 }
 // End of displayPerson()
 
@@ -239,21 +238,21 @@ function chars(input) {
 function findPersonFamily(person, people){
     let immediateFamily = "";
     if(person.parents.length > 0){
-        immediateFamily += findParents(person, people) + "\n";
+        immediateFamily += findParents(person, people)  + "<br>";
     }
     else {
-        immediateFamily += "Parent: None" + "\n";
+        immediateFamily += "Parent: None"  + "<br>";
     }
     
     if(person.parents.length > 0){
-            immediateFamily += findSiblings(person, people) + "\n";
+            immediateFamily += findSiblings(person, people)  + "<br>";
     }
     else {
-        immediateFamily += "Sibling: None" + "\n";
+        immediateFamily += "Sibling: None"  + "<br>";
     }
 
     if(person.currentSpouse){
-        immediateFamily += findSpouse(person, people) + "\n";
+        immediateFamily += findSpouse(person, people)  + "<br>";
     }
     else {
         immediateFamily += "Spouse: None";
@@ -276,7 +275,7 @@ function findSpouse(person, people){
     let spouseText = theirSpouse.map(function (spouse) {
             return `Spouse: ${spouse.firstName} ${spouse.lastName}`;
     })
-    .join("\n")
+    .join("<br>")
     return spouseText;
 }
 // End of findSpouse()
@@ -296,7 +295,7 @@ function findSiblings(person, people) {
         siblingText += siblings.map(function (sibling) {
             return `Sibling: ${sibling.firstName} ${sibling.lastName}`;
         })
-        .join("\n")
+        .join("<br>")
     }
     if (siblingText === ""){
         siblingText = "Sibling: None";
@@ -318,7 +317,7 @@ function findParents(person, people) {
     let theirParentsText = theirParents.map(function (parent) {
             return `Parent: ${parent.firstName} ${parent.lastName}`;
     })
-    .join("\n");
+    .join("<br>");
     if (theirParentsText === "") {
         theirParentsText = "Parent: None";
     }
@@ -371,7 +370,6 @@ function searchByTraits(people){
                 searchResults = [searchResults[selectedPersonNumber - 1]];
 
             }
-            displayPeople(searchResults);
             break;
 
         case "many":
@@ -391,7 +389,6 @@ function searchByTraits(people){
                 searchResults = [searchResults[selectedPersonNumber - 1]];
 
             }
-            displayPeople(searchResults);
             break;
     }
 
