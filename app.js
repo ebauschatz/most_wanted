@@ -64,19 +64,13 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
-            //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
-            // HINT: Look for a person-object stringifier utility function to help
             displayPerson(person[0]);
             break;
         case "family":
-            //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
-            // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
             alert(personFamily);
             break;
         case "descendants":
-            //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
-            // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
             displayPeople(personDescendants);
             break;
@@ -106,7 +100,7 @@ function searchByName(people) {
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.firstName === firstName && person.lastName === lastName) {
+        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
             return true;
         }
     });
@@ -145,11 +139,20 @@ function displayPerson(person) {
     personInfo += `Weight: ${person.weight}\n`;
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
-    personInfo += `Parents: ${person.parents[0]}, ${person.parents[1]}\n`; //id
-    personInfo += `Current Spouse: ${person.currentSpouse}\n`; //id
+    personInfo += `Parents: ${returnDataOrDisplayDefault(person.parents[0])}, ${returnDataOrDisplayDefault(person.parents[1])}\n`; //id
+    personInfo += `Current Spouse: ${returnDataOrDisplayDefault(person.currentSpouse)}\n`; //id
     alert(personInfo);
 }
 // End of displayPerson()
+
+function returnDataOrDisplayDefault(input) {
+    if(input){
+        return input;
+    }
+    else {
+        return "None";
+    }
+}
 
 /**
  * This function's purpose is twofold:
@@ -176,6 +179,36 @@ function yesNo(input) {
     return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
 }
 // End of yesNo()
+
+/**
+ * This helper function checks to see if the value passed into input is a "one" or "many."
+ * @param {String} input        A string that will be normalized via .toLowerCase().
+ * @returns {Boolean}           The result of our condition evaluation.
+ */
+ function oneMany(input) {
+    return input.toLowerCase() === "one" || input.toLowerCase() === "many";
+}
+// End of oneMany()
+
+/**
+ * This helper function checks to see if the value passed into input is a number between 1 and 6.
+ * @param {String} input        A string.
+ * @returns {Boolean}           The result of our condition evaluation.
+ */
+ function isNumericUnderSix(input) {
+    return /^[1-5]$/.test(input);
+}
+// End of isNumericUnderSix()
+
+/**
+ * This helper function checks to see if the value passed into input is a number.
+ * @param {String} input        A string.
+ * @returns {Boolean}           The result of our condition evaluation.
+ */
+ function isNumeric(input) {
+    return /^\d+$/.test(input);
+}
+// End of isNumeric()
 
 /**
  * This helper function operates as a default callback for promptFor's validation.
@@ -244,9 +277,9 @@ function findPersonDescendants(person, people){
     
 
 function searchByTraits(people){
-    let choice = promptFor("Search by one trait or many traits", chars);
+    let choice = promptFor("Search by one trait or many traits", oneMany);
     let searchResults;
-    switch (choice){
+    switch (choice.toLowerCase()){
         case 'one':
             searchResults = searchTheAtrributes(people);
             if(searchResults.length > 1){
@@ -255,7 +288,7 @@ function searchByTraits(people){
                 })
                 .join("\n")
 
-                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, chars);
+                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, isNumeric);
                 let selectedPersonNumber = parseInt(selectedPerson);
                 searchResults = [searchResults[selectedPersonNumber - 1]];
 
@@ -264,7 +297,7 @@ function searchByTraits(people){
             break;
 
         case "many":
-            let option = promptFor("How many traits do you want to look up? (number)", chars)
+            let option = promptFor("How many traits do you want to look up? (number 1 - 5)", isNumericUnderSix)
             searchResults = people;
             for(let i = 0; i < option; i ++){
                 searchResults = searchTheAtrributes(searchResults);
@@ -275,7 +308,7 @@ function searchByTraits(people){
                 })
                 .join("\n")
 
-                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, chars);
+                let selectedPerson = promptFor(`Please enter the number of a person below to view: \n ${promptText}`, isNumeric);
                 let selectedPersonNumber = parseInt(selectedPerson);
                 searchResults = [searchResults[selectedPersonNumber - 1]];
 
@@ -288,13 +321,14 @@ function searchByTraits(people){
 }
 
 function searchTheAtrributes(people){
-    let choice = promptFor("Which attribute?", chars)
+    let promptText = "Choose an attribute below:\nFirst Name\nLast Name\nGender\nDate of Birth\nHeight\nWeight\nEye Color\nOccupation\nParent\nCurrent Spouse";
+    let choice = promptFor(promptText, chars)
     let matchingPeople;
     switch(choice){
         case "First Name":
             let firstName = promptFor("Name to search for", chars)
             matchingPeople = people.filter(function(el){
-                if(el.firstName === firstName){
+                if(el.firstName.toLowerCase() === firstName.toLowerCase()){
                     return true
                 }
             })
@@ -302,7 +336,7 @@ function searchTheAtrributes(people){
         case "Last Name":
             let lastName = promptFor("Last name to search for", chars)
             matchingPeople = people.filter(function(el){
-                if(el.lastName === lastName){
+                if(el.lastName.toLowerCase() === lastName.toLowerCase()){
                     return true
                 }
             })
@@ -310,7 +344,7 @@ function searchTheAtrributes(people){
         case "Gender":
             let gender = promptFor("Gender to search for", chars)
             matchingPeople = people.filter(function(el){
-                if(el.gender === gender){
+                if(el.gender.toLowerCase() === gender.toLowerCase()){
                     return true
                 }
             })
@@ -324,7 +358,7 @@ function searchTheAtrributes(people){
             })
             break;
         case "Height":
-            let height = promptFor("Search for a height", chars)
+            let height = promptFor("Search for a height (in inches)", isNumeric)
             matchingPeople = people.filter(function(el){
                 if(el.height === height){
                     return true
@@ -332,7 +366,7 @@ function searchTheAtrributes(people){
             })
             break;
         case "Weight":
-            let weight = promptFor("Search for a weight", chars)
+            let weight = promptFor("Search for a weight", isNumeric)
             matchingPeople = people.filter(function(el){
                 if(el.weight === weight){
                     return true
@@ -342,7 +376,7 @@ function searchTheAtrributes(people){
         case "Eye Color":
             let eyeColor = promptFor("Search for an eye color", chars)
             matchingPeople = people.filter(function(el){
-                if(el.eyeColor === eyeColor){
+                if(el.eyeColor.toLowerCase() === eyeColor.toLowerCase()){
                     return true
                 }
             })
@@ -350,7 +384,7 @@ function searchTheAtrributes(people){
         case "Occupation":
             let occupation = promptFor("Search for the occupation", chars)
             matchingPeople = people.filter(function(el){
-                if(el.occupation === occupation){
+                if(el.occupation.toLowerCase() === occupation.toLowerCase()){
                     return true
                 }
             })
@@ -371,6 +405,9 @@ function searchTheAtrributes(people){
                 }
             })
             break;
+        default:
+            return searchTheAtrributes(people);
+        
     }
 
     return matchingPeople;
